@@ -9,10 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fragmentfirebase.databinding.TaskItemListBinding;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.RecyclerViewHolder> {
+public class AdapterRecycler extends RecyclerView.Adapter<ItemViewHolder> {
 
     Context context;
     List<ModelUser> modelUserList = new ArrayList<>();
@@ -22,35 +24,19 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.Recycl
         this.modelUserList = modelUserList;
     }
 
-    class RecyclerViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView author;
-        private TextView body;
-
-        public RecyclerViewHolder(@NonNull View itemView) {
-            super(itemView);
-            author = itemView.findViewById(R.id.textAuthor);
-            body = itemView.findViewById(R.id.textBody);
-        }
-
-    }
-
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.task_item_list, parent, false);
-        return new RecyclerViewHolder(view);
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        TaskItemListBinding binding = TaskItemListBinding.inflate(layoutInflater, parent, false);
+
+        return new ItemViewHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        if (modelUserList != null) {
-            ModelUser modelUserList = this.modelUserList.get(position);
-
-            holder.author.setText(modelUserList.getAuthor());
-            holder.body.setText(modelUserList.getBody());
-
-        }
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+        ModelUser modelUser = modelUserList.get(position);
+        holder.bind(modelUser);
     }
 
     @Override
