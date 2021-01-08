@@ -2,27 +2,27 @@ package com.example.fragmentfirebase;
 
 public class ModelUser {
 
-    String author;
-    String body;
+    String email;
+    String password;
 
-    public ModelUser(String author, String body) {
-        this.author = author;
-        this.body = body;
+    public ModelUser(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getBody() {
-        return body;
+    public String getPassword() {
+        return password;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
