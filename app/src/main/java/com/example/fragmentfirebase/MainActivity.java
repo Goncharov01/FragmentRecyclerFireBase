@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.fragmentfirebase.databinding.ActivityMainBinding;
 import com.example.fragmentfirebase.homeFragment.HomeFragment;
+import com.example.fragmentfirebase.messageFragment.MessageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,12 +35,17 @@ public class MainActivity extends AppCompatActivity {
                     Fragment fragment;
                     switch (item.getItemId()) {
 
-                        case R.id.home:
+                        case R.id.messageMenu:
+                            fragment = new MessageFragment();
+                            loadFragment(fragment);
+                            return true;
+
+                        case R.id.homeMenu:
                             fragment = new HomeFragment();
                             loadFragment(fragment);
                             return true;
 
-                        case R.id.dashboard:
+                        case R.id.dashboardMenu:
                             fragment = new RecyclerFragment();
                             loadFragment(fragment);
                             return true;

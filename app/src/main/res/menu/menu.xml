@@ -2,15 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/homeMenu"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="Home">
     </item>
 
     <item
-        android:id="@+id/dashboard"
+        android:id="@+id/dashboardMenu"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="Dashboard">
+    </item>
+
+    <item
+        android:id="@+id/messageMenu"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="Send message">
     </item>
 
 </menu>
