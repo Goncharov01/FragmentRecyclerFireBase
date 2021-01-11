@@ -1,4 +1,4 @@
-package com.example.fragmentfirebase;
+package com.example.fragmentfirebase.model;
 
 public class ModelUser {
 

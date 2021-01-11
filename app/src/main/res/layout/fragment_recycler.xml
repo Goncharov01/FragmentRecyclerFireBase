@@ -7,7 +7,12 @@
 
         <variable
             name="myAdapter"
-            type="com.example.fragmentfirebase.AdapterRecycler" />
+            type="com.example.fragmentfirebase.recyclerFragment.AdapterRecycler" />
+
+        <variable
+            name="myViewModel"
+            type="com.example.fragmentfirebase.recyclerFragment.ViewModelRecycler" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"

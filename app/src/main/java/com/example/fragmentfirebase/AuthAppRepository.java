@@ -1,15 +1,14 @@
 package com.example.fragmentfirebase;
 
 import android.content.Context;
-import android.os.Message;
-import android.view.Display;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.fragmentfirebase.messageFragment.ModelMessage;
+import com.example.fragmentfirebase.model.ModelMessage;
+import com.example.fragmentfirebase.model.ModelUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,7 +18,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,14 +33,15 @@ public class AuthAppRepository {
 
     private Context context;
     private FirebaseAuth firebaseAuth;
-    private MutableLiveData<List<ModelMessage>> messageLiveData = new MutableLiveData<>();
-    private MutableLiveData<FirebaseUser> userLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<ModelMessage>> messagesLiveData = new MutableLiveData<>();
+    private MutableLiveData<FirebaseUser> userLiveData;
 
-    List<ModelMessage> listMessage = new ArrayList<ModelMessage>();
+    public List<ModelMessage> listMessage = new ArrayList<ModelMessage>();
 
     public AuthAppRepository(Context context) {
         this.context = context;
         firebaseAuth = FirebaseAuth.getInstance();
+        this.userLiveData = new MutableLiveData<>();
     }
 
     public void regist(String email, String password) {
@@ -73,7 +73,7 @@ public class AuthAppRepository {
                             databaseReference.updateChildren(childUpdates);
                         } else {
 
-                            System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQ");
+                            System.out.println("--------Exception Regist---------");
 
                         }
 
@@ -94,50 +94,36 @@ public class AuthAppRepository {
 
                             userLiveData.setValue(firebaseAuth.getCurrentUser());
 
-                            DatabaseReference databaseReference = getInstance().getReference("messages");
-
-                            databaseReference.addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                    ModelMessage modelMessage = snapshot.getValue(ModelMessage.class);
-
-                                    listMessage.add(modelMessage);
-                                    messageLiveData.setValue(listMessage);
-
-                                    System.out.println(listMessage + "---------MESSAGES--------");
-
-                                }
-
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
                             Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(context, "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-
     }
 
+    public MutableLiveData<List<ModelMessage>> getMessageLiveData() {
+
+        databaseReference = getInstance().getReference("messages");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    listMessage.add(dataSnapshot.getValue(ModelMessage.class));
+                }
+
+                messagesLiveData.setValue(listMessage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return messagesLiveData;
+    }
 
 }

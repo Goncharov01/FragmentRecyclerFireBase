@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.fragmentfirebase.R;
 import com.example.fragmentfirebase.databinding.FragmentHomeBinding;
-import com.example.fragmentfirebase.messageFragment.ModelMessage;
+import com.example.fragmentfirebase.model.ModelMessage;
 
 import java.util.List;
 

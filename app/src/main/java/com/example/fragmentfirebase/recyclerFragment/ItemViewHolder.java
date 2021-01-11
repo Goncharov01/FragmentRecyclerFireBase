@@ -1,4 +1,4 @@
-package com.example.fragmentfirebase;
+package com.example.fragmentfirebase.recyclerFragment;
 
 import android.view.View;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fragmentfirebase.BR;
 import com.example.fragmentfirebase.databinding.TaskItemListBinding;
 
 public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -18,7 +19,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Object obj) {
-        binding.setVariable(BR.modelUser, obj);
+        binding.setVariable(BR.modelMessage, obj);
         binding.executePendingBindings();
     }
 

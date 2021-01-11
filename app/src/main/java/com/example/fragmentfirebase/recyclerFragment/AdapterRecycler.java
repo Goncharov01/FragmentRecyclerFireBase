@@ -1,14 +1,12 @@
-package com.example.fragmentfirebase;
+package com.example.fragmentfirebase.recyclerFragment;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fragmentfirebase.model.ModelMessage;
 import com.example.fragmentfirebase.databinding.TaskItemListBinding;
 
 import java.util.ArrayList;
@@ -16,12 +14,10 @@ import java.util.List;
 
 public class AdapterRecycler extends RecyclerView.Adapter<ItemViewHolder> {
 
-    Context context;
-    List<ModelUser> modelUserList = new ArrayList<>();
+    List<ModelMessage> listMessage = new ArrayList<>();
 
-    public AdapterRecycler(Context context, List<ModelUser> modelUserList) {
-        this.context = context;
-        this.modelUserList = modelUserList;
+    public AdapterRecycler(List<ModelMessage> listMessage) {
+        this.listMessage.addAll(listMessage);
     }
 
     @NonNull
@@ -35,18 +31,18 @@ public class AdapterRecycler extends RecyclerView.Adapter<ItemViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ModelUser modelUser = modelUserList.get(position);
-        holder.bind(modelUser);
+        ModelMessage modelMessage = listMessage.get(position);
+        holder.bind(modelMessage);
     }
 
     @Override
     public int getItemCount() {
-        return modelUserList.size();
+        return listMessage.size();
     }
 
-    public void onChange(List<ModelUser> modelUserList) {
-        modelUserList.clear();
-        modelUserList.addAll(modelUserList);
+    public void onChange(List<ModelMessage> listMessage) {
+        listMessage.clear();
+        listMessage.addAll(listMessage);
         notifyDataSetChanged();
     }
 

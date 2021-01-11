@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="modelUser"
-            type="com.example.fragmentfirebase.ModelUser" />
+            name="modelMessage"
+            type="com.example.fragmentfirebase.model.ModelMessage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,17 +23,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textEmail"
+                android:id="@+id/textbody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{modelUser.email}"
+                android:text="@{modelMessage.body}"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textPassword"
+                android:id="@+id/textauthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{modelUser.password}"
+                android:text="@{modelMessage.author}"
                 android:textSize="18sp" />
 
         </LinearLayout>

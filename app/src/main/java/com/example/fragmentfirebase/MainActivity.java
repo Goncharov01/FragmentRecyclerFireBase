@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.example.fragmentfirebase.databinding.ActivityMainBinding;
 import com.example.fragmentfirebase.homeFragment.HomeFragment;
 import com.example.fragmentfirebase.messageFragment.MessageFragment;
+import com.example.fragmentfirebase.recyclerFragment.RecyclerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

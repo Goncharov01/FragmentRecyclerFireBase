@@ -7,8 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.fragmentfirebase.AuthAppRepository;
-import com.example.fragmentfirebase.ModelUser;
-import com.example.fragmentfirebase.messageFragment.ModelMessage;
+import com.example.fragmentfirebase.model.ModelMessage;
 
 import java.util.List;
 
@@ -18,11 +17,12 @@ public class ViewModelHome extends ViewModel {
     private AuthAppRepository authAppRepository;
     public MutableLiveData<String> email = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
-    public MutableLiveData<List<ModelMessage>> listOfMessages = new MutableLiveData<List<ModelMessage>>();
+    public MutableLiveData<List<ModelMessage>> listOfMessages;
 
     public ViewModelHome(Context context) {
         this.context = context;
         this.authAppRepository = new AuthAppRepository(context);
+        this.listOfMessages = new MutableLiveData<>();
     }
 
     public void register(View v) {
