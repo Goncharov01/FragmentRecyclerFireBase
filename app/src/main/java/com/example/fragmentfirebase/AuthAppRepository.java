@@ -44,6 +44,11 @@ public class AuthAppRepository {
         this.userLiveData = new MutableLiveData<>();
     }
 
+    public MutableLiveData<List<ModelMessage>> getMessagesLiveData() {
+        System.out.println(messagesLiveData + "LIVEDATA GETT");
+        return messagesLiveData;
+    }
+
     public void regist(String email, String password) {
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -82,7 +87,6 @@ public class AuthAppRepository {
 
     }
 
-
     public void login(String email, String password) {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -94,6 +98,27 @@ public class AuthAppRepository {
 
                             userLiveData.setValue(firebaseAuth.getCurrentUser());
 
+                            databaseReference = getInstance().getReference("messages");
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                                        listMessage.add(dataSnapshot.getValue(ModelMessage.class));
+                                    }
+
+                                    messagesLiveData.setValue(listMessage);
+                                    System.out.println(listMessage + "-------LISTMESS------");
+                                    System.out.println(messagesLiveData.getValue() + "-------LIVEDATA-----");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
                             Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(context, "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -102,28 +127,5 @@ public class AuthAppRepository {
                 });
     }
 
-    public MutableLiveData<List<ModelMessage>> getMessageLiveData() {
-
-        databaseReference = getInstance().getReference("messages");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                    listMessage.add(dataSnapshot.getValue(ModelMessage.class));
-                }
-
-                messagesLiveData.setValue(listMessage);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        return messagesLiveData;
-    }
 
 }

@@ -14,6 +14,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -43,6 +45,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "com.android.support:recyclerview-v7:30.0.0"
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'com.firebaseui:firebase-ui-firestore:6.1.0'
+    implementation 'com.android.support:multidex:1.0.3'
 
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.firebase:firebase-analytics'

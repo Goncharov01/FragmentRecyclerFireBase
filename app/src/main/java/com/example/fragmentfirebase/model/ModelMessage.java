@@ -9,8 +9,8 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class ModelMessage {
 
-    public String author;
-    public String body;
+    public String author = "qwetrty";
+    public String body = "qwerty";
 
     public ModelMessage() {
     }

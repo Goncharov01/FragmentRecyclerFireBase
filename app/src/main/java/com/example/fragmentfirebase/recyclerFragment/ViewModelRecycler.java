@@ -16,17 +16,12 @@ public class ViewModelRecycler extends ViewModel {
     Context context;
     public MutableLiveData<List<ModelMessage>> listMessages = new MutableLiveData<>();
     private AuthAppRepository authAppRepository;
-    public List<ModelMessage> list = new ArrayList<>();
-
-    public MutableLiveData<List<ModelMessage>> getListLiveData(){
-        System.out.println(listMessages.getValue() + "@@@@@@@@@@@@@@@@@@");
-        return listMessages;
-    }
 
     public ViewModelRecycler(Context context) {
         this.context = context;
         this.authAppRepository = new AuthAppRepository(context);
-        this.listMessages = authAppRepository.getMessageLiveData();
+        this.listMessages = authAppRepository.getMessagesLiveData();
+        System.out.println(listMessages.getValue() + "LISTCONSTUCTOR");
     }
 
 }

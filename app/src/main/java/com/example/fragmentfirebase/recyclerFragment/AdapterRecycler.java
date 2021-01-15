@@ -8,16 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fragmentfirebase.model.ModelMessage;
 import com.example.fragmentfirebase.databinding.TaskItemListBinding;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterRecycler extends RecyclerView.Adapter<ItemViewHolder> {
+public class AdapterRecycler extends FirestoreRecyclerAdapter<ModelMessage, ItemViewHolder> {
 
-    List<ModelMessage> listMessage = new ArrayList<>();
+    public AdapterRecycler(@NonNull FirestoreRecyclerOptions<ModelMessage> options) {
+        super(options);
+    }
 
-    public AdapterRecycler(List<ModelMessage> listMessage) {
-        this.listMessage.addAll(listMessage);
+    @Override
+    protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ModelMessage model) {
+        holder.bind(model);
     }
 
     @NonNull
@@ -29,21 +34,21 @@ public class AdapterRecycler extends RecyclerView.Adapter<ItemViewHolder> {
         return new ItemViewHolder(binding.getRoot());
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ModelMessage modelMessage = listMessage.get(position);
-        holder.bind(modelMessage);
-    }
+//    @Override
+//    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+//        ModelMessage modelMessage = listMessage.get(position);
+//        holder.bind(modelMessage);
+//    }
 
-    @Override
-    public int getItemCount() {
-        return listMessage.size();
-    }
+//    @Override
+//    public int getItemCount() {
+//        return listMessage.size();
+//    }
 
-    public void onChange(List<ModelMessage> listMessage) {
-        listMessage.clear();
-        listMessage.addAll(listMessage);
-        notifyDataSetChanged();
-    }
+//    public void onChange(List<ModelMessage> listMessage) {
+//        listMessage.clear();
+//        listMessage.addAll(listMessage);
+//        notifyDataSetChanged();
+//    }
 
 }

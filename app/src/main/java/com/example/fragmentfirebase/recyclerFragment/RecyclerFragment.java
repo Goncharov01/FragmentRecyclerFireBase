@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import com.example.fragmentfirebase.R;
 import com.example.fragmentfirebase.databinding.FragmentRecyclerBinding;
 import com.example.fragmentfirebase.model.ModelMessage;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ public class RecyclerFragment extends Fragment {
 
     List<ModelMessage> listMessage = new ArrayList<>();
 
-    AdapterRecycler adapterRecycler = new AdapterRecycler(listMessage);
+    AdapterRecycler adapterRecycler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,23 +49,28 @@ public class RecyclerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         recyclerFactory = new RecyclerFactory(getContext().getApplicationContext());
 
-        viewModelRecycler = ViewModelProviders.of(this,recyclerFactory).get(ViewModelRecycler.class);
+        viewModelRecycler = ViewModelProviders.of(getActivity(), recyclerFactory).get(ViewModelRecycler.class);
+
+        Query query = FirebaseFirestore.getInstance()
+                .collection("messages");
+
+        FirestoreRecyclerOptions<ModelMessage> options = new FirestoreRecyclerOptions.Builder<ModelMessage>().setQuery(query, ModelMessage.class).build();
+        adapterRecycler = new AdapterRecycler(options);
 
         binding.setMyAdapter(adapterRecycler);
         binding.setMyViewModel(viewModelRecycler);
 
-        viewModelRecycler.getListLiveData().observe(getViewLifecycleOwner(), new Observer<List<ModelMessage>>() {
-            @Override
-            public void onChanged(List<ModelMessage> modelMessages) {
-
-                adapterRecycler.onChange(modelMessages);
-
-                System.out.println(modelMessages + "%%%%%%%%%%%%%");
-            }
-        });
+//        viewModelRecycler.getListLiveData().observe(getViewLifecycleOwner(), new Observer<List<ModelMessage>>() {
+//            @Override
+//            public void onChanged(List<ModelMessage> modelMessages) {
+//
+//                adapterRecycler.onChange(modelMessages);
+//
+//                System.out.println(modelMessages + "%%%%%%%%%%%%%");
+//            }
+//        });
 
         binding.executePendingBindings();
 
     }
-
 }
